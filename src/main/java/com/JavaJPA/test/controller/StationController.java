@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/")
@@ -37,5 +39,10 @@ public class StationController {
   public ResponseEntity<String> deleteStation(@PathVariable("id") Integer id){
     stationService.deleteStation(id);
     return ResponseEntity.status(200).body("Success");
+  }
+  @GetMapping("async")
+  public ResponseEntity<String> getAsyncAllStations() throws InterruptedException {
+    stationService.getAllStationAsync();
+    return ResponseEntity.status(200).body("Now Async task will run");
   }
 }

@@ -3,11 +3,13 @@ package com.JavaJPA.test.service;
 import com.JavaJPA.test.entity.Station;
 import com.JavaJPA.test.repository.StationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class StationService {
@@ -39,4 +41,14 @@ public class StationService {
   public void deleteStation(Integer id){
     stationRepository.deleteById(id);
   }
+  @Async
+  public CompletableFuture<List<Station>> getAllStationAsync() throws InterruptedException {
+    List<Station> allStation = new ArrayList<Station>();
+    Thread.sleep(10000);
+    stationRepository.findAll()
+      .forEach(station -> allStation.add(station));
+    System.out.println("allStation from async operation = " + allStation);
+    return CompletableFuture.completedFuture(allStation);
+  }
+
 }
