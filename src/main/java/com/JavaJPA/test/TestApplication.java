@@ -32,12 +32,12 @@ public class TestApplication {
         }
       };
     }
-    @Bean
+    @Bean("taskThreadPool")
     public Executor asyncTaskExecutors(){
       ThreadPoolTaskExecutor threadPoolTaskExecutor = new ThreadPoolTaskExecutor();
-      threadPoolTaskExecutor.setCorePoolSize(2);
-      threadPoolTaskExecutor.setMaxPoolSize(2);
-      threadPoolTaskExecutor.setQueueCapacity(500);
+      threadPoolTaskExecutor.setCorePoolSize(100);
+      threadPoolTaskExecutor.setMaxPoolSize(200);
+      threadPoolTaskExecutor.setQueueCapacity(1000);
       threadPoolTaskExecutor.setThreadNamePrefix("TaskThreadPool-");
       threadPoolTaskExecutor.initialize();
       return threadPoolTaskExecutor;

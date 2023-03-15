@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/")
@@ -42,7 +43,13 @@ public class StationController {
   }
   @GetMapping("async")
   public ResponseEntity<String> getAsyncAllStations() throws InterruptedException {
-    stationService.getAllStationAsync();
+    IntStream.range(0,1000).forEach((i)->{
+      try {
+        stationService.getAllStationAsync(i);
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
+    });
     return ResponseEntity.status(200).body("Now Async task will run");
   }
 }

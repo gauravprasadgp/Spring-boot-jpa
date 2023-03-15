@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.IntStream;
 
 @Service
 public class StationService {
@@ -41,10 +42,10 @@ public class StationService {
   public void deleteStation(Integer id){
     stationRepository.deleteById(id);
   }
-  @Async
-  public CompletableFuture<List<Station>> getAllStationAsync() throws InterruptedException {
+  @Async("taskThreadPool")
+  public CompletableFuture<List<Station>> getAllStationAsync(int i) throws InterruptedException {
     List<Station> allStation = new ArrayList<Station>();
-    Thread.sleep(10000);
+    System.out.format("Executing thread for index %d with thread %s \n",i,Thread.currentThread().getName());
     stationRepository.findAll()
       .forEach(station -> allStation.add(station));
     System.out.println("allStation from async operation = " + allStation);
