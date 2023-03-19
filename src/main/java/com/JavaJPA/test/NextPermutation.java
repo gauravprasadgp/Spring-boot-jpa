@@ -1,6 +1,6 @@
 package com.JavaJPA.test;
 
-public class Permutation {
+public class NextPermutation {
   static void swap(int arr[], int i, int j){
     int temp = arr[i];
     arr[i] = arr[j];
